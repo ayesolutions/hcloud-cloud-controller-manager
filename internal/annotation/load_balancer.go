@@ -86,6 +86,9 @@ const (
 	// Mutually exclusive with LBNetworkZone.
 	LBLocation Name = "load-balancer.hetzner.cloud/location"
 
+	// LBKeepServices can be set to exclude existing services from deletion on ensuring LB event
+	LBKeepServices Name = "load-balancer.hetzner.cloud/keep-services"
+
 	// LBNetworkZone specifies the network zone where the Load Balancer will be
 	// created in.
 	//

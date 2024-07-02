@@ -876,6 +876,13 @@ func (l *LoadBalancerOps) ReconcileHCLBServices(
 		changed = true
 	}
 
+	// skip deletion if LBLocation annotation is set to true
+	if v, err := annotation.LBKeepServices.BoolFromService(svc); err == nil {
+		if v {
+			return changed, nil
+		}
+	}
+
 	// Remove any left-over services from the hc Load Balancer.
 	for p := range hclbListenPorts {
 		klog.InfoS("remove service", "op", op, "port", p, "loadBalancerID", lb.ID)
