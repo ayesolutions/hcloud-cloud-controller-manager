@@ -4,8 +4,7 @@ on:
   push:
     tags:
       - v*
-    branches:
-      - main
+
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
@@ -29,15 +28,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Set up Helm
         uses: azure/setup-helm@v3
-      - name: Run GoReleaser for snapshot
-        # This does not actually publish anything, but makes sure that the images can be build
-        if: "!startsWith(github.ref, 'refs/tags/')"
-        uses: goreleaser/goreleaser-action@v6
-        with:
-          version: "~> v2"
-          args: release --snapshot --clean
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Git is used to push helm chart to hetznercloud/helm-charts
       - name: Setup Git
         if: "startsWith(github.ref, 'refs/tags/')"
